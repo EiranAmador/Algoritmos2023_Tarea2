@@ -57,30 +57,23 @@ public:
     void Insert(bstnode<T>* z) {
         
         // Inserta el nodo z en la posicion que le corresponde en el arbol.
-        if (root == nullptr) //Raiz vacia
-        {
-            root = z;
-        } 
-        else 
-        {
-            bstnode<T>* current = root;
-            bstnode<T>* parent = nullptr;
-
-            while (current != nullptr) {
-                parent = current;
-
-                if (z->key < current->key) {
-                    current = current->left;
-                } else {
-                    current = current->right; 
-                }
-            }
-
-            if (z->key < parent->key) {
-                parent->left = z; 
-            } else {
-                parent->right = z; 
-            }
+        bstnode<T> *y = nullptr;
+        bstnode<T> *x = this->root;
+        while ( x != nullptr ){
+            y = x;
+            if ( z->key < x->key ){
+                x = x->left;
+            }else{
+                x = x->right;
+            }           
+        }
+        z->p = y;
+        if ( y == nullptr ){
+            this->root = z; //Arbol vacio
+        }else if( z->key < y->key ){
+            y->left = z;
+        }else{
+            y->right = z;
         }
     };
     
